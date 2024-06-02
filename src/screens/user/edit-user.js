@@ -35,7 +35,6 @@ const EditUserModal = ({ isOpen, onClose, user, onChangeUser }) => {
               value={modalUserEmail}
               onChangeText={setModalUserEmail}
               mt="md"
-              onChange={(e) => console.log({ e })}
             />
           </Box>
 

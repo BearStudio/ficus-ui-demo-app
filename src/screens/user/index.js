@@ -1,26 +1,32 @@
 import { useLocalSearchParams } from "expo-router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Box,
   Button,
+  Center,
+  FlashList,
   Icon,
   Image,
   Option,
   Select,
+  Spinner,
   Switch,
   Text,
   TouchableOpacity,
   VStack,
   useDisclosure,
+  useMediaQuery,
 } from "react-native-ficus-ui";
 import EditUserModal from "./edit-user";
+import { useUserImages } from "../../hooks/users";
+import { useWindowDimensions } from "react-native";
 
-const User = () => {
+const User = ({ userStringObj }) => {
   const { user: userString } = useLocalSearchParams();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const user = JSON.parse(userString);
+  const user = JSON.parse(userStringObj || userString);
 
   const [userEmail, setUserEmail] = useState(user?.email);
   const [userPhone, setUserPhone] = useState(user?.phone);
@@ -29,6 +35,28 @@ const User = () => {
 
   const selectRef = useRef();
   const [contactGroup, setContactGroup] = useState("⚽️ team");
+
+  const {
+    userImages,
+    refresh: refreshImages,
+    isLoading: isLoadingImages,
+  } = useUserImages();
+
+  const [isSmallScreen] = useMediaQuery({
+    minWidth: 0,
+    maxWidth: 480,
+  });
+  const { width: screenWidth } = useWindowDimensions();
+  const imageWidth = (screenWidth - 40) / 3 / (isSmallScreen ? 1 : 2);
+
+  useEffect(() => {
+    refreshImages();
+  }, [refreshImages, userString, userStringObj]);
+
+  useEffect(() => {
+    setUserEmail(user?.email);
+    setUserPhone(user?.phone);
+  }, [user?.email, user?.phone]);
 
   return (
     <Box h="100%" p="xl">
@@ -150,6 +178,33 @@ const User = () => {
           </Box>
         </Box>
       </VStack>
+
+      <Text fontSize="lg" fontWeight="bold" mt="xl" mb="lg">
+        📸 Images
+      </Text>
+
+      {isLoadingImages ? (
+        <Center flex={1}>
+          <Spinner color="green.500" size="large" />
+        </Center>
+      ) : (
+        <FlashList
+          data={userImages}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Image
+              source={{ uri: item?.url }}
+              h={imageWidth}
+              w={imageWidth}
+              m="xs"
+              resizeMode="cover"
+            />
+          )}
+          numColumns={3}
+          estimatedItemSize={imageWidth}
+          h="100%"
+        />
+      )}
 
       <EditUserModal
         user={{

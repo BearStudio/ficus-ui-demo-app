@@ -6,8 +6,8 @@ export const useUsers = () => {
 
   const loadUsers = useCallback(async () => {
     setIsLoading(true);
-    const reponse = await fetch("https://randomuser.me/api/?results=20");
-    const usersList = await reponse.json();
+    const response = await fetch("https://randomuser.me/api/?results=20");
+    const usersList = await response.json();
     setUsers(usersList?.results);
     setIsLoading(false);
   }, []);
@@ -17,4 +17,25 @@ export const useUsers = () => {
   }, [loadUsers]);
 
   return { users, isLoading, refresh: loadUsers };
+};
+
+export const useUserImages = () => {
+  const [userImages, setUserImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const loadUserImages = useCallback(async () => {
+    setIsLoading(true);
+    const response = await fetch(
+      "https://api.thecatapi.com/v1/images/search?limit=100&api_key=live_whEz0shCysEZqNdb8crnpfaCgIgx328c5YBHzNVDTpDUAEBrIzUOfBvCWJ43Jhjk"
+    );
+    const usersList = await response.json();
+    setUserImages(usersList);
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    loadUserImages();
+  }, [loadUserImages]);
+
+  return { userImages, isLoading, refresh: loadUserImages };
 };

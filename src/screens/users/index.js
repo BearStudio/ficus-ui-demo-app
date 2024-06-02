@@ -7,11 +7,13 @@ import {
   useMediaQuery,
 } from "react-native-ficus-ui";
 import { useUsers } from "../../hooks/users";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import User from "../user";
+import { useState } from "react";
 
 const UsersListing = () => {
   const { users, isLoading, refresh } = useUsers();
+  const [currentUser, setCurrentUser] = useState(null);
 
   const router = useRouter();
 
@@ -20,9 +22,6 @@ const UsersListing = () => {
     maxWidth: 480,
   });
 
-  const { user: userString } = useLocalSearchParams();
-  const currentUser = !!userString ? JSON.parse(userString) : null;
-
   const handleOpenUserDetails = (user) => () => {
     if (isSmallScreen) {
       router.push({
@@ -30,7 +29,7 @@ const UsersListing = () => {
         params: { user: JSON.stringify(user) },
       });
     } else {
-      router.setParams({ user: JSON.stringify(user) });
+      setCurrentUser(JSON.stringify(user));
     }
   };
 
@@ -77,7 +76,7 @@ const UsersListing = () => {
       {!isSmallScreen &&
         (currentUser ? (
           <Box flex={0.5}>
-            <User />
+            <User userStringObj={currentUser} />
           </Box>
         ) : (
           <Box flex={0.5} />
