@@ -20,6 +20,8 @@ import {
 import EditUserModal from "./edit-user";
 import { useUserImages } from "../../hooks/users";
 import { useWindowDimensions } from "react-native";
+import { SectionTitle } from "./section-title";
+import { Header } from "./header";
 
 const User = ({ userStringObj }) => {
   const { user: userString } = useLocalSearchParams();
@@ -60,25 +62,7 @@ const User = ({ userStringObj }) => {
 
   return (
     <Box h="100%" p="xl">
-      <Box flexDirection="row" alignItems="center">
-        <Image
-          source={{ uri: user?.picture?.large }}
-          w={80}
-          h={80}
-          borderRadius={100}
-        />
-
-        <Text
-          fontSize="6xl"
-          fontWeight="bold"
-          ml="lg"
-          numberOfLines={2}
-          ellipsizeMode="tail"
-          flex={1}
-        >
-          {`${user.name?.first} ${user.name?.last}`}
-        </Text>
-
+      <Header user={user}>
         <TouchableOpacity onPress={onOpen}>
           <Icon
             name="user-edit"
@@ -87,31 +71,25 @@ const User = ({ userStringObj }) => {
             fontSize="4xl"
           />
         </TouchableOpacity>
-      </Box>
+      </Header>
 
       <VStack spacing="xl" mt="xl">
         <Box>
-          <Text fontSize="lg" fontWeight="bold">
-            ✉️ Email
-          </Text>
+          <SectionTitle>✉️ Email</SectionTitle>
           <Box mt="xs">
             <Text fontSize="xl">{userEmail}</Text>
           </Box>
         </Box>
 
         <Box>
-          <Text fontSize="lg" fontWeight="bold">
-            ☎️ Phone number
-          </Text>
+          <SectionTitle>☎️ Phone number</SectionTitle>
           <Box mt="xs">
             <Text fontSize="xl">{userPhone}</Text>
           </Box>
         </Box>
 
         <Box>
-          <Text fontSize="lg" fontWeight="bold">
-            📍 Address
-          </Text>
+          <SectionTitle>📍 Address</SectionTitle>
           <Box mt="xs">
             <Text fontSize="xl">{`${user.location?.street?.number} ${user.location?.street?.name}`}</Text>
             <Text fontSize="xl">{`${user.location?.city} ${user.location?.state}`}</Text>
@@ -120,9 +98,7 @@ const User = ({ userStringObj }) => {
         </Box>
 
         <Box flexDirection="row" alignItems="center" justify="space-between">
-          <Text fontSize="lg" fontWeight="bold">
-            ⭐️ In Favorites
-          </Text>
+          <SectionTitle>⭐️ In Favorites</SectionTitle>
           <Switch
             colorScheme="green"
             on={isInFavorites}
@@ -131,9 +107,7 @@ const User = ({ userStringObj }) => {
         </Box>
 
         <Box flexDirection="row" alignItems="center" justify="space-between">
-          <Text fontSize="lg" fontWeight="bold">
-            Contact group
-          </Text>
+          <SectionTitle>Contact group</SectionTitle>
           <Box>
             <Button
               colorScheme="white"
@@ -179,9 +153,9 @@ const User = ({ userStringObj }) => {
         </Box>
       </VStack>
 
-      <Text fontSize="lg" fontWeight="bold" mt="xl" mb="lg">
+      <SectionTitle mt="xl" mb="lg">
         📸 Images
-      </Text>
+      </SectionTitle>
 
       {isLoadingImages ? (
         <Center flex={1}>
