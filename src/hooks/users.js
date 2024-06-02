@@ -26,10 +26,10 @@ export const useUserImages = () => {
   const loadUserImages = useCallback(async () => {
     setIsLoading(true);
     const response = await fetch(
-      "https://api.thecatapi.com/v1/images/search?limit=100&api_key=live_whEz0shCysEZqNdb8crnpfaCgIgx328c5YBHzNVDTpDUAEBrIzUOfBvCWJ43Jhjk"
+      "https://api.thecatapi.com/v1/images/search?limit=99&api_key=live_whEz0shCysEZqNdb8crnpfaCgIgx328c5YBHzNVDTpDUAEBrIzUOfBvCWJ43Jhjk"
     );
-    const usersList = await response.json();
-    setUserImages(usersList);
+    const images = await response.json();
+    setUserImages(images);
     setIsLoading(false);
   }, []);
 

@@ -39,6 +39,7 @@ const UsersListing = () => {
         <Text fontSize="6xl" fontWeight="bold" mb="xl">
           Users
         </Text>
+
         <List
           ItemSeparatorComponent={() => <Box h={10} />}
           refreshing={isLoading}

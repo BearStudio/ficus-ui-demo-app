@@ -73,7 +73,7 @@ const User = ({ userStringObj }) => {
         </TouchableOpacity>
       </Header>
 
-      <VStack spacing="xl" mt="xl">
+      <VStack spacing="lg" mt="xl">
         <Box>
           <SectionTitle>✉️ Email</SectionTitle>
           <Box mt="xs">
@@ -154,7 +154,7 @@ const User = ({ userStringObj }) => {
       </VStack>
 
       <SectionTitle mt="xl" mb="lg">
-        📸 Images
+        📸 Photos
       </SectionTitle>
 
       {isLoadingImages ? (
@@ -170,7 +170,6 @@ const User = ({ userStringObj }) => {
               source={{ uri: item?.url }}
               h={imageWidth}
               w={imageWidth}
-              m="xs"
               resizeMode="cover"
             />
           )}
