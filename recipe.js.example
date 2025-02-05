@@ -1,0 +1,107 @@
+import React from "react";
+import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
+
+const RecipeScreen = () => {
+  const recipe = {
+    title: "Spaghetti Carbonara",
+    image:
+      "https://assets.afcdn.com/recipe/20181031/83533_w1024h1024c1cx1746cy2327cxt0cyt0cxb3490cyb4655.jpg",
+    description:
+      "Un délicieux plat italien à base de pâtes, d'œufs, de pancetta et de fromage.",
+    ingredients: [
+      "200g de spaghetti",
+      "100g de pancetta",
+      "2 œufs",
+      "50g de parmesan râpé",
+      "Sel et poivre",
+    ],
+    instructions: [
+      "Faire cuire les spaghetti dans de l'eau bouillante salée.",
+      "Faire revenir la pancetta dans une poêle.",
+      "Mélanger les œufs et le parmesan dans un bol.",
+      "Ajouter les pâtes égouttées et le mélange aux œufs dans la poêle.",
+      "Bien mélanger et servir chaud.",
+    ],
+  };
+
+  return (
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.card}>
+          <Image source={{ uri: recipe.image }} style={styles.image} />
+          <Text style={styles.title}>{recipe.title}</Text>
+          <Text style={styles.description}>{recipe.description}</Text>
+
+          <Text style={styles.sectionTitle}>🥕 Ingrédients</Text>
+          {recipe.ingredients.map((item, index) => (
+            <Text key={index} style={styles.listItem}>
+              • {item}
+            </Text>
+          ))}
+
+          <Text style={styles.sectionTitle}>📖 Instructions</Text>
+          {recipe.instructions.map((step, index) => (
+            <Text key={index} style={styles.listItem}>
+              {index + 1}. {step}
+            </Text>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f8f8f8",
+  },
+  scrollContainer: {
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+  card: {
+    width: "90%",
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#333",
+    marginBottom: 10,
+  },
+  description: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#666",
+    marginBottom: 15,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#444",
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  listItem: {
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 5,
+  },
+});
+
+export default RecipeScreen;

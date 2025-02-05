@@ -1,0 +1,111 @@
+import React from "react";
+import { StyleSheet } from "react-native";
+import {
+  Box,
+  Text,
+  Flex,
+  Image,
+  ScrollBox,
+  Center,
+  VStack,
+} from "react-native-ficus-ui";
+
+const RecipeScreen = () => {
+  const recipe = {
+    title: "Spaghetti Carbonara",
+    image:
+      "https://assets.afcdn.com/recipe/20181031/83533_w1024h1024c1cx1746cy2327cxt0cyt0cxb3490cyb4655.jpg",
+    description:
+      "Un délicieux plat italien à base de pâtes, d'œufs, de pancetta et de fromage.",
+    ingredients: [
+      "200g de spaghetti",
+      "100g de pancetta",
+      "2 œufs",
+      "50g de parmesan râpé",
+      "Sel et poivre",
+    ],
+    instructions: [
+      "Faire cuire les spaghetti dans de l'eau bouillante salée.",
+      "Faire revenir la pancetta dans une poêle.",
+      "Mélanger les œufs et le parmesan dans un bol.",
+      "Ajouter les pâtes égouttées et le mélange aux œufs dans la poêle.",
+      "Bien mélanger et servir chaud.",
+    ],
+  };
+
+  return (
+    <Flex bg="gray.50">
+      <ScrollBox contentContainerStyle={styles.scrollContainer}>
+        <VStack
+          spacing="xl"
+          bg="white"
+          w="90%"
+          p="lg"
+          borderRadius="2xl"
+          shadow="sm"
+        >
+          <Image source={{ uri: recipe.image }} h={200} borderRadius="xl" />
+
+          <Center>
+            <Text fontSize="4xl" fontWeight="bold" color="gray.800" mb="md">
+              {recipe.title}
+            </Text>
+            <Text fontSize="lg" color="gray.600">
+              {recipe.description}
+            </Text>
+          </Center>
+
+          <Box>
+            <Text fontSize="2xl" fontWeight="bold" color="gray.800" mb="md">
+              🥕 Ingrédients
+            </Text>
+            <VStack spacing="sm">
+              {recipe.ingredients.map((item, index) => (
+                <Text key={index} fontSize="lg" color="gray.600">
+                  • {item}
+                </Text>
+              ))}
+            </VStack>
+          </Box>
+
+          <Box>
+            <Text fontSize="2xl" fontWeight="bold" color="gray.800" mb="md">
+              📖 Instructions
+            </Text>
+            <VStack spacing="sm">
+              {recipe.ingredients.map((item, index) => (
+                <Text key={index} fontSize="lg" color="gray.600">
+                  • {item}
+                </Text>
+              ))}
+            </VStack>
+          </Box>
+
+          <Box>
+            <Center
+              bg="brand.500"
+              w={100}
+              h={100}
+              borderRadius="full"
+              borderWidth={12}
+              borderColor="brand.600"
+            >
+              <Text color="brand.900" fontSize="4xl" fontWeight="bold">
+                5/5
+              </Text>
+            </Center>
+          </Box>
+        </VStack>
+      </ScrollBox>
+    </Flex>
+  );
+};
+
+const styles = StyleSheet.create({
+  scrollContainer: {
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+});
+
+export default RecipeScreen;
